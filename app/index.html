@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111014">
+  <title>Viceframe Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="#" aria-label="Viceframe Studio home"><span>VF</span> VICEFRAME</a>
+    <div class="mast-actions"><span class="offline"><i></i> OFFLINE STUDIO</span><button id="exportTop" class="primary">EXPORT PNG</button></div>
+  </header>
+  <main>
+    <section class="workspace" aria-label="Cover workspace">
+      <div class="stage-head"><div><p>LIVE ARTBOARD</p><strong id="sizeLabel">1080 × 1350</strong></div><div class="zoom-note">DROP PHOTOS · DRAG TO PAN · SCROLL TO ZOOM</div></div>
+      <div class="stage-shell"><div id="artboard" class="artboard layout-three" tabindex="0" aria-label="Poster preview">
+        <div class="panel panel-a" tabindex="0" data-index="0"><canvas></canvas><div class="drop-label"><b>01</b><span>DROP IMAGE</span></div></div>
+        <div class="panel panel-b" tabindex="0" data-index="1"><canvas></canvas><div class="drop-label"><b>02</b><span>DROP IMAGE</span></div></div>
+        <div class="panel panel-c" tabindex="0" data-index="2"><canvas></canvas><div class="drop-label"><b>03</b><span>DROP IMAGE</span></div></div>
+        <div class="grade-layer"></div><div class="grain"></div>
+        <div class="cover-type"><div id="previewTop" class="eyebrow">WELCOME TO THE AFTERGLOW</div><h1 id="previewTitle">VICE<br>STATE</h1><div class="rule"></div><div id="previewCredits" class="credits">A VICEFRAME ORIGINAL · MMXXVI</div></div>
+        <div class="corner-mark">VF<br><small>06</small></div>
+      </div></div>
+      <p class="keyboard-help">Select a panel, then use arrow keys for precise positioning.</p>
+    </section>
+    <aside class="controls">
+      <div class="control-title"><div><span>ART DIRECTION</span><h2>Cover controls</h2></div><button id="resetAll" class="icon-button" title="Reset all panels">↺</button></div>
+      <section class="control-block"><h3><span>01</span> Layout</h3><div class="layout-options" role="group" aria-label="Panel layout">
+        <button class="layout-choice active" data-layout="three"><i class="layout-icon three"><b></b><b></b><b></b></i><span>Triptych</span></button>
+        <button class="layout-choice" data-layout="two"><i class="layout-icon two"><b></b><b></b></i><span>Duet</span></button>
+        <button class="layout-choice" data-layout="full"><i class="layout-icon full"><b></b></i><span>Full bleed</span></button>
+      </div></section>
+      <section class="control-block"><h3><span>02</span> Images</h3><div class="image-rows">
+        <label class="image-row"><b>Panel 01</b><em id="file0">Sample scene</em><input type="file" accept="image/*" data-file="0"><span>CHOOSE</span></label>
+        <label class="image-row"><b>Panel 02</b><em id="file1">Sample scene</em><input type="file" accept="image/*" data-file="1"><span>CHOOSE</span></label>
+        <label class="image-row"><b>Panel 03</b><em id="file2">Sample scene</em><input type="file" accept="image/*" data-file="2"><span>CHOOSE</span></label>
+      </div></section>
+      <section class="control-block"><h3><span>03</span> Typography</h3><label>TOP LINE<input id="topLine" value="WELCOME TO THE AFTERGLOW" maxlength="42"></label><label>TITLE<textarea id="title" rows="2" maxlength="28">VICE STATE</textarea></label><label>CREDITS<input id="credits" value="A VICEFRAME ORIGINAL · MMXXVI" maxlength="48"></label></section>
+      <section class="control-block"><h3><span>04</span> Color grade</h3><div class="grades">
+        <button class="grade active" data-grade="sunset"><i></i><span>Sunset</span></button><button class="grade" data-grade="neon"><i></i><span>Neon</span></button><button class="grade" data-grade="noir"><i></i><span>Noir</span></button><button class="grade" data-grade="aqua"><i></i><span>Aqua</span></button>
+      </div><div class="toggles"><label><input id="bloom" type="checkbox" checked><span></span>Bloom</label><label><input id="grain" type="checkbox" checked><span></span>Grain</label></div></section>
+      <section class="control-block export-block"><h3><span>05</span> Export</h3><label>OUTPUT SIZE<select id="exportSize"><option value="1080x1350">Portrait · 1080 × 1350</option><option value="1080x1080">Square · 1080 × 1080</option><option value="1200x630">Landscape · 1200 × 630</option></select></label><button id="exportButton" class="export-button">DOWNLOAD PNG <span>↗</span></button><p>Rendered locally. Your images never leave this device.</p></section>
+    </aside>
+  </main>
+  <div id="toast" role="status" aria-live="polite">PNG READY</div>
+  <script src="app.js"></script>
+</body>
+</html>
