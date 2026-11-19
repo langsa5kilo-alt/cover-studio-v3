@@ -4,13 +4,12 @@ import { fileURLToPath } from "node:url";
 
 import { buildDossier } from "./vendor/makefun-app.ts";
 
-// Resolve defaults beside this entry point so the script also works outside the
-// repository's current working directory.
+// Anchor the fallback source path to this file, not to the caller's working directory.
 const repositoryRoot = dirname(fileURLToPath(import.meta.url));
 const sourceRoot = process.env.MAKEFUN_BOT_DIR || repositoryRoot;
 const outputRoot = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 
-// These limits describe the bundle that buildDossier is allowed to inventory.
+// Keep the dossier inventory within the platform's accepted bundle limits.
 const caps = {
   text_max_bytes: 163840,
   screenshots: { max: 4, max_bytes: 262144 },
@@ -21,20 +20,25 @@ const caps = {
 
 mkdirSync(outputRoot, { recursive: true });
 
-// Always replace generated assets; stale files must not survive a new export.
+// Rebuild both asset trees so an earlier export cannot leave stale files behind.
 for (const directory of ["app", "screenshots"]) {
   const destination = join(outputRoot, directory);
   try {
     rmSync(destination, { recursive: true, force: true });
     cpSync(join(sourceRoot, directory), destination, { recursive: true });
   } catch (error) {
-    throw new Error(`Could not refresh ${directory} in ${outputRoot}`, { cause: error });
+    throw new Error(
+      `Failed to replace output directory "${destination}" from source "${join(sourceRoot, directory)}"`,
+      { cause: error },
+    );
   }
 }
 
-// Write the manifest last so it only describes a fully copied bundle.
+// Generate the manifest only after the files it inventories are in place.
 try {
   writeFileSync(join(outputRoot, "dossier.json"), buildDossier(outputRoot, caps));
 } catch (error) {
-  throw new Error(`Could not write dossier.json in ${outputRoot}`, { cause: error });
+  throw new Error(`Failed to build or write dossier manifest "${join(outputRoot, "dossier.json")}"`, {
+    cause: error,
+  });
 }
