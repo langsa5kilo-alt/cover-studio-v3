@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Afterglow Cover Lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="#" aria-label="Afterglow home"><span>AG</span><b>AFTERGLOW</b><small>COVER LAB / 26</small></a>
+    <div class="privacy"><i></i><span>OFFLINE STUDIO<small>Images never leave your browser</small></span></div>
+    <button id="export" class="export">EXPORT PNG <b>↗</b></button>
+  </header>
+  <main>
+    <nav class="rail" aria-label="Studio sections">
+      <button class="tab active" data-tab="compose"><b>▦</b><span>Compose</span></button>
+      <button class="tab" data-tab="caption"><b>Aa</b><span>Caption</span></button>
+      <button class="tab" data-tab="grade"><b>◑</b><span>Grade</span></button>
+    </nav>
+    <aside class="controls">
+      <section class="pane active" data-pane="compose">
+        <p class="overline">01 / COMPOSITION</p><h1>Shape the story.</h1>
+        <div id="layouts" class="layout-list"></div>
+        <div class="section-head"><span><small>PANEL IMAGES</small><b>Build your scene</b></span><em id="panelTotal">3 PANELS</em></div>
+        <label class="drop" id="dropzone"><input id="files" type="file" accept="image/*" multiple><strong>＋</strong><b>DROP PHOTOS HERE</b><small>or click to browse · JPG / PNG / WEBP</small></label>
+        <div id="panels" class="panel-list"></div>
+        <div class="tip"><b>PRO TIP</b><span>Click a panel, then drag to pan. Scroll to zoom. Arrow keys nudge.</span></div>
+      </section>
+      <section class="pane" data-pane="caption">
+        <p class="overline">02 / TYPOGRAPHY</p><h1>Say it loud.</h1>
+        <label>TOP LINE<input id="topline" value="A COASTLINE CHRONICLE" maxlength="36"></label>
+        <label>BIG TITLE<input id="headline" value="MIDNIGHT HEAT" maxlength="24"></label>
+        <label>CREDITS LINE<input id="credits" value="AN AFTERGLOW ORIGINAL · MMXXVI" maxlength="48"></label>
+        <div class="tip"><b>LIVE TYPE</b><span>Every line is measured and rendered directly into your exported PNG.</span></div>
+      </section>
+      <section class="pane" data-pane="grade">
+        <p class="overline">03 / COLOR</p><h1>Set the temperature.</h1>
+        <div id="grades" class="grade-list"></div>
+        <label class="slider">BLOOM <output id="bloomOut">42</output><input id="bloom" type="range" min="0" max="100" value="42"></label>
+        <label class="slider">FILM GRAIN <output id="grainOut">20</output><input id="grain" type="range" min="0" max="50" value="20"></label>
+      </section>
+    </aside>
+    <section class="stage">
+      <div class="stagebar"><span><i></i> LIVE ARTBOARD</span><b id="dimensions">1080 × 1350</b><span>LOCAL RENDER</span></div>
+      <div class="canvas-wrap"><canvas id="art" width="1080" height="1350" tabindex="0" aria-label="Cover preview, use arrows to nudge selected panel"></canvas><div class="canvas-label">DRAG TO PAN · SCROLL TO ZOOM</div></div>
+      <div class="sizes"><span>EXPORT FORMAT</span><button class="size active" data-w="1080" data-h="1350">PORTRAIT <b>4:5</b></button><button class="size" data-w="1080" data-h="1080">SQUARE <b>1:1</b></button><button class="size" data-w="1200" data-h="630">LANDSCAPE <b>1.91:1</b></button></div>
+    </section>
+  </main>
+  <div id="toast" class="toast">PNG EXPORTED TO DOWNLOADS</div>
+  <div id="lightbox" class="lightbox" aria-hidden="true"><button id="close">×</button><div><p>EXPORT PREVIEW · <span id="exportSize"></span></p><img id="exportImage" alt="Exported cover preview"><h2>Ready for the feed.</h2><small>Full-resolution PNG · made locally</small></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
