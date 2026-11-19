@@ -1,19 +1,14 @@
 import { cpSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 
-const kitHelper = "/home/ubuntu/projects/makefun/kits/gta6-cover/gta6-cover-art-01-kit/vendor/makefun-frontend.ts";
-const workspaceHelper = "/home/ubuntu/agents/brisk/projects/gta6-cover/vendor/makefun-frontend.ts";
+import { buildDossier } from "./vendor/makefun-app.ts";
 
-let module;
-try {
-  module = await import(pathToFileURL(kitHelper).href);
-} catch (error) {
-  if ((error as NodeJS.ErrnoException).code !== "ERR_MODULE_NOT_FOUND") throw error;
-  module = await import(pathToFileURL(workspaceHelper).href);
-}
+const repositoryRoot = dirname(fileURLToPath(import.meta.url));
+const sourceRoot = process.env.MAKEFUN_BOT_DIR || repositoryRoot;
+const outputRoot = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 
-const limits = {
+const caps = {
   text_max_bytes: 163840,
   screenshots: { max: 4, max_bytes: 262144 },
   app_max_files: 993,
@@ -21,14 +16,12 @@ const limits = {
   app_path_max_bytes: 1000,
 };
 
-const root = dirname(fileURLToPath(import.meta.url));
-const target = process.env.MAKEFUN_OUTPUT_DIR || "/output";
-mkdirSync(target, { recursive: true });
+mkdirSync(outputRoot, { recursive: true });
 
-for (const folder of ["app", "screenshots"]) {
-  const copyTarget = join(target, folder);
-  rmSync(copyTarget, { recursive: true, force: true });
-  cpSync(join(root, folder), copyTarget, { recursive: true });
+for (const directory of ["app", "screenshots"]) {
+  const destination = join(outputRoot, directory);
+  rmSync(destination, { recursive: true, force: true });
+  cpSync(join(sourceRoot, directory), destination, { recursive: true });
 }
 
-writeFileSync(join(target, "dossier.json"), module.buildDossier(target, limits));
+writeFileSync(join(outputRoot, "dossier.json"), buildDossier(outputRoot, caps));
